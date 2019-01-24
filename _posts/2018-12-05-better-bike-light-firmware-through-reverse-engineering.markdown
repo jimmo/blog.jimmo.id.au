@@ -10,11 +10,7 @@ Because Eddy was riding her bike a lot more than I was at the time, I gave it to
 
 Anyway, the DING is a really good light. It’s seriously bright, the downwards facing LED is excellent for avoiding potholes and it makes me far more visible at night time. It has something like NINE (count them!) different modes. It charges over USB. They won awards!
 
-{% figure [caption:"An almost-accurate picture of the number of DING lights we owned in Feb 2017!"] %}
-{% figure [caption:""] %}
-![](/assets/img/0*MxttX5d12kKXRH9U)
-{% endfigure %}
-{% endfigure %}
+{% include figure.html url="/assets/img/0*MxttX5d12kKXRH9U" caption="An almost-accurate picture of the number of DING lights we owned in Feb 2017!" %}
 
 There is only two major problems with this light:
 
@@ -29,47 +25,33 @@ So what to do! First let’s check if perhaps it has DFU (Device Firmware Upgrad
 
 Next, let’s open it up and see what’s inside:
 
-{% figure [caption:"Ignore the breadboard wires attached to the programming header."] %}
-![](/assets/img/1*ZSCccF5JlBc5nc5S6N2A5w.jpeg)
-{% endfigure %}
+{% include figure.html url="/assets/img/1*ZSCccF5JlBc5nc5S6N2A5w.jpeg" caption="Ignore the breadboard wires attached to the programming header." %}
 
-{% figure [caption:"Hello there MainPCB Revision 3.2"] %}
-![](/assets/img/1*ePZVPB7cIF5OTiWk963p-A.jpeg)
-{% endfigure %}
+{% include figure.html url="/assets/img/1*ePZVPB7cIF5OTiWk963p-A.jpeg" caption="Hello there MainPCB Revision 3.2" %}
 
-{% figure [caption:""] %}
-![](/assets/img/1*oTLW5_1ohjoww0_y6UT7vQ.jpeg)
-{% endfigure %}
+{% include figure.html url="/assets/img/1*oTLW5_1ohjoww0_y6UT7vQ.jpeg" caption="" %}
 
 Time to try and identify some chips. Also the orange/gold coloured round thing… yeah that’s the button. I wasted ages trying to figure out what sort of crazy component that was before wondering to myself “where’s the button?”.
 
 No secret “programming mode” button or switch, and looking at the traces, the D+/D- pins don’t go anywhere. Microscope time.
 
-{% figure [caption:"The one right next to the USB port."] %}
-![](/assets/img/1*h7W5qtdWNf68IbP41EvllQ.jpeg)
-{% endfigure %}
+{% include figure.html url="/assets/img/1*h7W5qtdWNf68IbP41EvllQ.jpeg" caption="The one right next to the USB port." %}
 
 I’m fairly sure this is some sort of battery charging controller. Couldn’t find the exact part.
 
-{% figure [caption:"In the centre of the board."] %}
-![](/assets/img/1*eBNL6L7w2gUCLoIlmEwbpw.jpeg)
-{% endfigure %}
+{% include figure.html url="/assets/img/1*eBNL6L7w2gUCLoIlmEwbpw.jpeg" caption="In the centre of the board." %}
 
 That’s the LED driver. Unsurprising!
 
 > The ZXLD1321 is an inductive DC-DC converter, with an internal switch, designed for driving single or multiple LEDs in series up to a total of 1A output current.
 
-{% figure [caption:"What’s an MGA X134 OKRJ?"] %}
-![](/assets/img/1*0qEJnxt1-OEKifxNi9MS7Q.jpeg)
-{% endfigure %}
+{% include figure.html url="/assets/img/1*0qEJnxt1-OEKifxNi9MS7Q.jpeg" caption="What’s an MGA X134 OKRJ?" %}
 
 This one’s almost certainly the microcontroller. It has pins connecting to the blue/orange/red/green indicator LEDs. But what is it?
 
 First step is to search Digikey for 16-pin *QFN package microcontrollers. That leaves you with a couple of main options: TI MSP430 and PIC16F. Both plausible, but fortunately I got lucky with the first datasheet for a PIC16F that had an example marking of:
 
-{% figure [caption:""] %}
-![](/assets/img/1*sIoagqYv8KXSIpKRFY_zfQ.png)
-{% endfigure %}
+{% include figure.html url="/assets/img/1*sIoagqYv8KXSIpKRFY_zfQ.png" caption="" %}
 
 Didn’t take long to narrow it down to the PIC16F1503. Well at least it’s not an MSP430, but I’m very strongly on the AVR side of the PIC / AVR divide, almost entirely because I hate Microchip’s awful (and expensive) compilers. Seriously… $30/month for the optimizing compiler? Thank goodness it wasn’t an MSP430 and I’d have to buy yet another programmer to add to the collection.
 
@@ -79,9 +61,7 @@ While the read-protect fuse prevents me from reading the existing firmware, it�
 
 Next step was to figure out what each pin does. Watching the pins one by one with a scope while running through the various operating modes (on, charging, etc) it was straightforward to find the LED pins (especially the main front/down ones because they were PWMed). The only really tricky part was battery charging — I had no idea whether the PIC was involved in this process, but eventually was able to figure out that one pin was an analog input measuring battery voltage, and another was an output from the charger IC indicating “it’s currently charging”.
 
-{% figure [caption:"Eventually this picture was filled out with a function for every pin..."] %}
-![](/assets/img/1*h7pTHX3_mFVWOJvlrGXuvw.jpeg)
-{% endfigure %}
+{% include figure.html url="/assets/img/1*h7pTHX3_mFVWOJvlrGXuvw.jpeg" caption="Eventually this picture was filled out with a function for every pin..." %}
 
 I wrote a quick program to read from the button and toggle the four indicator LEDs, then another one to measure the two battery status pins. Using the bench supply at different voltages and blinking a 10-bit binary number on the orange LED I was able to figure out sensible threshold voltages for the battery charge level.
 

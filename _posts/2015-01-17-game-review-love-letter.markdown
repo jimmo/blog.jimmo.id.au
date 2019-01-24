@@ -10,9 +10,9 @@ I got a copy of this while in the US a couple of years ago based on the review a
 
 My favourite part about this game is explaining it to new players. You explain the rules (which takes about two minutes), promise everyone “trust me, it works”, followed by awkwardly playing through the first round, then suddenly everyone clicks and before you know it you’ve played 5 more rounds. By that point other people have heard all the laughter and are begging to substitute in or play in pairs.
 
-{% figure [caption:""] %}
-![](/assets/img/0*72K-ClHc7tgvSxfc.jpg)
-{% endfigure %}The rules are simple — you’re trying to deliver a love letter to the Princess. There’s a cute backstory explained in the rules. The card that you end the round with (if you don’t get evicted before then!) is the character that you actually delivered the letter to, the closer to the Princess, the better.
+{% include figure.html url="/assets/img/0*72K-ClHc7tgvSxfc.jpg" caption="" %}
+
+The rules are simple — you’re trying to deliver a love letter to the Princess. There’s a cute backstory explained in the rules. The card that you end the round with (if you don’t get evicted before then!) is the character that you actually delivered the letter to, the closer to the Princess, the better.
 
 Each turn you pick up one card, and place one down (discard it) in front of you. The card you place has some effect (e.g. discarding the Priest lets you look at another players card). Other players’ effects may cause you to be evicted from the round. After the draw pile is discarded (a few minutes), the round winner gets a “token of affection” and the aim is to win a certain amount (depending on the number of players) of “tokens of affection”.
 
@@ -24,8 +24,6 @@ You can also get several different editions, including a [Lord of the Rings](htt
 
 I recently played a game called Cypher (also by AEG) which is probably best described as a cyber-hacker themed two-card version of Love Letter — i.e. you have two cards in front of you at any time, and there are more distinct cards. It’s really fun too and I’ll write a review of it later. It’s worth mentioning that I haven’t yet found an AEG game that I haven’t enjoyed.
 
-I’ve often been in situations where we’ve had more than four players, but Love Letter is limited to four players. I’ve wondered how we could adapt it to support more players, but perhaps you should just play Coup instead…  
-  
-One last thing — [The Broken Token](http://www.thebrokentoken.com/) sell a [replacement set of love cubes](http://www.thebrokentoken.com/tokens-of-affection-14/). I’m also keen to check out their range of box organizers (Netrunner, 7 Wonders, etc).
+I’ve often been in situations where we’ve had more than four players, but Love Letter is limited to four players. I’ve wondered how we could adapt it to support more players, but perhaps you should just play Coup instead…
 
-  
+One last thing — [The Broken Token](http://www.thebrokentoken.com/) sell a [replacement set of love cubes](http://www.thebrokentoken.com/tokens-of-affection-14/). I’m also keen to check out their range of box organizers (Netrunner, 7 Wonders, etc).

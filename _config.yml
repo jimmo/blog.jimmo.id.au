@@ -29,8 +29,6 @@ markdown: kramdown
 theme: jekyll-theme-minimal
 plugins:
   - jekyll-feed
-  - jekyll-figure
-
 
 defaults:
   - scope:

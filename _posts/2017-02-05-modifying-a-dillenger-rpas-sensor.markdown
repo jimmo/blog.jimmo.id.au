@@ -8,15 +8,11 @@ date:	2017-02-05
 
 The main difficulty though was the pedal assist. The way it works is a disc with 12 magnets is attached to the crank and they rotate past a hall effect sensor when you pedal. Dillenger [calls it the RPAS](http://dillengerelectricbikes.com.au/spares/electric-bike-kit-spares/cables-pas/rpas-upgraded-wiring-by-dillenger.html). The disc comes in two halves and is held tight on the crank by a metal ring around the outside. It’s a really neat design, but didn’t fit my crank.
 
-{% figure [caption:""] %}
-![](/assets/img/0*5Z9JIWjNBG_3WoIz.jpg)
-{% endfigure %}
+{% include figure.html url="/assets/img/0*5Z9JIWjNBG_3WoIz.jpg" caption="hello" %}
 
 So instead I machined out the centre and attached it to the cog on the other side. You can just see it in the photo below.
 
-{% figure [caption:""] %}
-![](/assets/img/0*6Skr-GuR6WOF3VmL.jpg)
-{% endfigure %}
+{% include figure.html url="/assets/img/0*6Skr-GuR6WOF3VmL.jpg" caption="" %}
 
 Unfortunately this means that the sensor now detects pedaling backwards. Initially I thought that turning the disc to face the other way would fix it, however the way the sensor works is there are two hall effect sensors and it detects the order that the magnet passes them. It’s impossible to re-orient the sensor to make this possible.
 
@@ -24,27 +20,19 @@ Having it detect the wrong direction is super dangerous, so I left it disabled a
 
 I figured I’d open up the sensor and see what could be done! Once the I’d cleaned off the potting compound, the PCB is pretty straightforward:
 
-{% figure [caption:""] %}
-![](/assets/img/0*jeJ3GwGbk3XIL3Ar.png)
-{% endfigure %}
+{% include figure.html url="/assets/img/0*jeJ3GwGbk3XIL3Ar.png" caption="" %}
 
 I didn’t clean the potting compound off the hall effect sensors, but there’s two on the left there next to the capacitor. They don’t appear to be the latching US1881 type that I’ve used in previous projects — both they’re oriented the wrong way for that package and the latching type would require both north and south magnets. On the disc they’re all mounted the same way.
 
-{% figure [caption:""] %}
-![](/assets/img/0*DynrXTEG0UynFX8m.png)
-{% endfigure %}
+{% include figure.html url="/assets/img/0*DynrXTEG0UynFX8m.png" caption="" %}
 
 Underneath you can see the pads for the hall effect sensors and two vias. The way it works is that each time a magnet passes by the pair of sensors (in the correct direction), it toggles the output. If the magnet moves in the opposite direction, it does nothing. The LED is connected directly to the output.
 
 The fix was pretty straightforward — invert the hall effect sensors. Two cut tracks and some enamel bodge wires, all sorted!
 
-{% figure [caption:""] %}
-![](/assets/img/0*vqFtujM-hrcogbYb.png)
-{% endfigure %}
+{% include figure.html url="/assets/img/0*vqFtujM-hrcogbYb.png" caption="" %}
 
-{% figure [caption:""] %}
-![](/assets/img/0*BmNuZSDzbyeTGdSe.png)
-{% endfigure %}
+{% include figure.html url="/assets/img/0*BmNuZSDzbyeTGdSe.png" caption="" %}
 
 I repotted it in epoxy and put it back on the bike and off I went around the block with a big grin on my face.
 

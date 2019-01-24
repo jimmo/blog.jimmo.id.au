@@ -6,9 +6,7 @@ date:	2016-04-17
 
   After over seven years there, Friday was my last day at Google. I’m going to be starting at my new job in two weeks time, so that gives me 16 days (over a million seconds!) of project time. I’ve been getting my workbench set up over the past few months and I’m super excited.
 
-{% figure [caption:""] %}
-![](/assets/img/0*mLxl_lCJNJwaj77B.jpg)
-{% endfigure %}
+{% include figure.html url="/assets/img/0*mLxl_lCJNJwaj77B.jpg" caption="" %}
 
 There’s a few things on the list, but here are the main items:
 

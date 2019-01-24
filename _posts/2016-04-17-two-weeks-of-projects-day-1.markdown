@@ -6,9 +6,9 @@ date:	2016-04-17
 
   After the leaving drinks and a big sleep-in it was a bit of a slow start. The garden got the first bit of attention — a pair of [Hardenbergias](https://en.wikipedia.org/wiki/Hardenbergia_violacea) to grow up the pergola outside.
 
-{% figure [caption:""] %}
-![](/assets/img/0*0hVqm3U2L646ePCY.jpg)
-{% endfigure %}Then we spent a bunch of time looking at shelves for under the stairs. In the end we found a perfect unit which I’ll install during the week. Progress! Looking forward to getting all the books sorted out.
+{% include figure.html url="/assets/img/0*0hVqm3U2L646ePCY.jpg" caption="" %}
+
+Then we spent a bunch of time looking at shelves for under the stairs. In the end we found a perfect unit which I’ll install during the week. Progress! Looking forward to getting all the books sorted out.
 
 Google Play helpfully emailed me to tell me that the next season of Orphan Black has started, so we had a quick distraction.
 
@@ -25,5 +25,3 @@ But I’m not quite that crazy and I don’t like soldering *that* much, so I fo
 I’m excited about the LEDs too — watching every step happen visually would be great for demos. I also like the long-term ability to keep extending the design to add more features — interrupts, variable-length instructions, fewer clock pulses per instruction retired, more hardware support for things like the stack, etc.
 
 My goal is to get it to play Pong…
-
-  

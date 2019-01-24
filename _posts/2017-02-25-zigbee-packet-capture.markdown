@@ -20,9 +20,7 @@ My theory was that either:
 
 At [linux.conf.au 2017](https://linux.conf.au/) I attended an excellent talk by Jon Oxer about [Network Protocol Analysis for IoT Devices](https://www.youtube.com/watch?v=3BNNY6_r3tQ). A key point — everything is easier when you can debug the network layer. So I went looking for an 802.15.4 sniffer. I followed a few paths to various dead ends, but came to the conclusion that the best bet was a [TI CC2531](http://www.ti.com/tool/CC2531emk) USB module. This is an 8051-based microcontroller with a 802.15.4 radio transceiver. Importantly, it comes supplied with firmware that allows you to use a [Windows-based TI tool for packet capture](http://www.ti.com/tool/packet-sniffer), but also allows you to develop custom firmware. In particular, it’s supported by [Contiki OS](http://www.contiki-os.org/) which includes a sample application called [“sensniff”](https://github.com/contiki-os/contiki/tree/master/examples/sensniff), that does packet capture, with a [Python program that can write it in pcap format](https://github.com/g-oikonomou/sensniff) for [Wireshark](https://www.wireshark.org/).
 
-{% figure [caption:"TI CC2531"] %}
-![](/assets/img/1*6_-biUkBycv6D2iKhXwm-Q.jpeg)
-{% endfigure %}
+{% include figure.html url="/assets/img/1*6_-biUkBycv6D2iKhXwm-Q.jpeg" caption="TI CC2531" %}
 
 Very exciting! The kit arrived, but despite having a USB interface, you can’t actually program it without a [dedicated programmer](http://www.ti.com/tool/CC-DEBUGGER). Argh! So, another Digikey order. In hindsight this was super obvious, but frustrated that I missed it.
 
@@ -32,9 +30,7 @@ While I waited for the Digikey order, I figured out how to build the Contiki fir
 
 Also I figured it would be good to be able to program the device from Linux too — after following [this forum post](https://e2e.ti.com/support/wireless_connectivity/low_power_rf_tools/f/155/p/144696/524846#524846) to [this GitHub repo](https://github.com/dashesy/cc-tool) I was able to get that up and running too.
 
-{% figure [caption:"TI CC-Debugger."] %}
-![](/assets/img/1*KCeo7QQRB5Rh5x4Vt0T3lQ.jpeg)
-{% endfigure %}
+{% include figure.html url="/assets/img/1*KCeo7QQRB5Rh5x4Vt0T3lQ.jpeg" caption="TI CC-Debugger." %}
 
 But it didn’t work. Very frustrating, because I couldn’t even make the Contiki blink demo work. Turns out something is broken in SDCC later than SVN revision 9092. Reverting back to 9092 and I had working firmware! Let me know if you’d like a built image to flash.
 
@@ -56,19 +52,13 @@ Next to tell Wireshark how to decrypt the HA-profile data. I found [this video](
 * Edit the keys and add “5A:69:67:42:65:65:41:6C:6C:69:61:6E:63:65:30:39” with byte order “normal” and label something like “Zigbee Trust Center Link Key”. (Fun fact: that key is the hex of “ZigBeeAlliance09”).
 * Now grab a frame and open up “Zigbee Network Layer Data / Zigbee Security Header” and grab the transport key, and add it alongside the first key. *This key is private to your network and is given to devices during joining.*
 
-{% figure [caption:"Finding the transport key in the security header of a captured packet."] %}
-![](/assets/img/1*OxiKK5gPMCF5KMlTjyzCrA.png)
-{% endfigure %}
+{% include figure.html url="/assets/img/1*OxiKK5gPMCF5KMlTjyzCrA.png" caption="Finding the transport key in the security header of a captured packet." %}
 
-{% figure [caption:"Configuring the Zigbee keys in Wireshark preferences."] %}
-![](/assets/img/1*sMhGRmFwv0VZeh5Iw_hJYg.png)
-{% endfigure %}
+{% include figure.html url="/assets/img/1*sMhGRmFwv0VZeh5Iw_hJYg.png" caption="Configuring the Zigbee keys in Wireshark preferences." %}
 
 Awesome! Now we get fully decrypted packets in Wireshark. So, what does it look like when I turn on a room?
 
-{% figure [caption:"Interesting!"] %}
-![](/assets/img/1*PYOaHRrHLnCKOczBRov-vg.png)
-{% endfigure %}
+{% include figure.html url="/assets/img/1*PYOaHRrHLnCKOczBRov-vg.png" caption="Interesting!" %}
 
 So I’m fairly sure this debunks the “devices don’t do retries” theory, and it suggests that collisions probably aren’t a thing. Looking at you, XBee…
 

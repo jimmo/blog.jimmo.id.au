@@ -10,6 +10,4 @@ One of the most [interesting blogs I follow](http://danluu.com/) posted a [fanta
 
 The only real progress I made on projects was that I assembled the shelves!
 
-{% figure [caption:""] %}
-![](/assets/img/0*7sl_ltdskTNuMjpg.jpg)
-{% endfigure %}  
+{% include figure.html url="/assets/img/0*7sl_ltdskTNuMjpg.jpg" caption="" %}

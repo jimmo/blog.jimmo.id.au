@@ -18,9 +18,7 @@ My goal is to emulate hard-to-find 7400 series parts, so a CPLD will do the job.
 
 The CPLD that best seems to match my requirements is the Xilinx XC9572XL, which is handy because in a random collection of electronics that I inherited from a friend, I found this breakout board from [Dangerous Prototypes](http://dangerousprototypes.com/docs/XC9500XL_CPLD_breakout_board) (DP).
 
-{% figure [caption:"The handy XC9572XL breakout board from Dangerous Prototypes. Note the lack of anything extra on the board other than an LDO, some bypass caps, and some LEDs and a switch for prototyping."] %}
-![](/assets/img/1*yrMwTfUxeWhdwra5J0RHsw.jpeg)
-{% endfigure %}
+{% include figure.html url="/assets/img/1*yrMwTfUxeWhdwra5J0RHsw.jpeg" caption="The handy XC9572XL breakout board from Dangerous Prototypes. Note the lack of anything extra on the board other than an LDO, some bypass caps, and some LEDs and a switch for prototyping." %}
 
 There’s a smaller (fewer macrocells) model, the XC9536XL, and there are various packages that come with more IO pins (e.g. TQFP64)
 

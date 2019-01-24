@@ -17,17 +17,13 @@ Also, it was ~2000–2001 and I was doing most of this on BeOS, so there was no 
 
 The first thing I built was an MBR boot menu — basically just select one of the four primary partitions to boot. The boot sector is 512 bytes, but you lose 64 bytes to the partition table and 2 bytes to the signature, so that leaves 446 bytes to make a GUI. And just the partition labels and various messages take up another 70. This was where I first learnt the “xor ax, ax” is two bytes, whereas “mov ax, 0” is four.
 
-{% figure [caption:""] %}
-![](/assets/img/0*scK_CAr0ah-hxydy.png)
-{% endfigure %}
+{% include figure.html url="/assets/img/0*scK_CAr0ah-hxydy.png" caption="" %}
 
 The interesting thing about the boot menu is that you don’t really have enough space to get into protected mode, so you do the whole thing in 16-bit real mode. I think a real boot menu would have code to load all the sectors from the first track. The boot menu’s job is to load the first sector from the selected partition and jump to that.
 
 The next project was the actual OS. I think OS is the wrong word but I never came up with a better term. And of course, see earlier description of delusions. Most of the time was spent figuring out how to get to 32-bit protected mode, then some basic interrupt handling and video mode changing. I made a bitmap font and some basic text functions and blitting.
 
-{% figure [caption:""] %}
-![](/assets/img/0*AtYbfKMeZoHOO1Wa.png)
-{% endfigure %}
+{% include figure.html url="/assets/img/0*AtYbfKMeZoHOO1Wa.png" caption="" %}
 
 What’s this got to do with project week? Reading the two articles linked at the top of this post was like seeing the worked solution guide to the problems I was working on almost 15 years ago. So cool. I decided today to see if I could get my old thing to boot. At some point in the early 2000s I started using VMWare on Windows so I’d written the buid tools (e.g. the font generator) using Win32. I re-wrote them today in Python and it booted in qemu no trouble at all and I captured those screenshots above. Very exciting! It was fun reading the old code even with all the comments I can barely remember how it all worked.
 

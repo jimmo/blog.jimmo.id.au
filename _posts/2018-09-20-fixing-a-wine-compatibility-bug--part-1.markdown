@@ -6,17 +6,13 @@ date:	2018-09-20
 
   I use an excellent program called [Cut2D by Vectric](https://www.vectric.com/products/cut2d.html) for generating toolpaths for CNC milling, and SVG files for laser cutting. I find it much simpler to use than other programs, but still does everything I need for 2D machining. If only their more advanced programs (VCarve, Cut3D, etc) weren’t so expensive for hobby use!
 
-{% figure [caption:""] %}
-![](/assets/img/1*Oc0xv1koNSz8ktP5BR8TzQ.png)
-{% endfigure %}
+{% include figure.html url="/assets/img/1*Oc0xv1koNSz8ktP5BR8TzQ.png" caption="" %}
 
 However, it’s a Windows app, and I’ve been running it in a VM for a while, which is not a great experience. Recently, given how well LTSpice works, I thought to try it under Wine, and unsurprisingly, Cut2D works well too! Wine is a program that lets you run Windows apps on a large number of other platforms, by providing a clean room implementation of…well…most of Windows.
 
 Amazingly, almost everything works perfectly, from the 3D visualization of toolpaths to the drawing interface, **except** for one minor detail — in the layer list, you can’t toggle layer visibility or select a layer colour. Also if you change either from somewhere else in the program, the list didn’t update. This didn’t particularly bother me until I started using it for laser cutting, because the software I use uses the layer colour to group operations.
 
-{% figure [caption:"Layer 3 is actually invisible (the bulb should be grey). You can’t click on any of the bulbs or colour swatches."] %}
-![](/assets/img/1*Hjm-QGwFR252K32yRsF2xQ.png)
-{% endfigure %}
+{% include figure.html url="/assets/img/1*Hjm-QGwFR252K32yRsF2xQ.png" caption="Layer 3 is actually invisible (the bulb should be grey). You can’t click on any of the bulbs or colour swatches." %}
 
 So, this is the tale of trying to get that fixed in Wine. If you’re interested in fixing your own compatibility bug, then this will hopefully give you some pointers on how to get started. This is part 1, figuring out what’s going on and learning about Wine. I’ll add more parts and link them here as the journey progresses!
 
@@ -42,25 +38,19 @@ First of all, how is this list implemented? It’s likely using the built-in lis
 
 These days Visual Studio is free! So I downloaded Visual Studio 2017 Community Edition in a Windows 10 VM and selected the minimum packages to get Spy++: *Visual Studio C++ core features.* It has a handy “Find Window” feature where you drag a target over the window you want to investigate and it finds that window in the hierarchy (similar to the Web Inspector in Chrome). Spy++ runs great under Wine.
 
-{% figure [caption:"Hello SysListView32! Note the XTP class names indicate they’re using [Exteme Toolkit Pro](http://www.codejock.com/products/toolkitpro/)"] %}
-![](/assets/img/1*gbe7uhoDNfIv-dHmfBeCzg.png)
-{% endfigure %}
+{% include figure.html url="/assets/img/1*gbe7uhoDNfIv-dHmfBeCzg.png" caption="Hello SysListView32! Note the XTP class names indicate they’re using [Exteme Toolkit Pro](http://www.codejock.com/products/toolkitpro/)" %}
 
 Great! “SysListView32” is the class name for the ListView control (not to be confused with “ListBox” which is the simple list control). These come with Windows in the Common Controls library (comctl32.dll / commctrl.h). (You can confirm this by grepping the Wine source, searching MSDN, etc).
 
 Let’s look at the messages when the layer visibility bulb icon is clicked.
 
-{% figure [caption:"Not much stuff happened."] %}
-![](/assets/img/1*YuHEQ-izMoe3OxrGZvQZcA.png)
-{% endfigure %}
+{% include figure.html url="/assets/img/1*YuHEQ-izMoe3OxrGZvQZcA.png" caption="Not much stuff happened." %}
 
 710–716 are the mouse down, 171–723 are the mouse up. It wasn’t particularly obvious to me at the time, but the issue is in message 723: The hit test returns nIndex -1 (i.e. no item).
 
 Let’s compare the same thing running under Windows.
 
-{% figure [caption:"A lot more stuff happens!"] %}
-![](/assets/img/1*M2HK0zmUR_MD6xXba0DCPQ.png)
-{% endfigure %}
+{% include figure.html url="/assets/img/1*M2HK0zmUR_MD6xXba0DCPQ.png" caption="A lot more stuff happens!" %}
 
 This doesn’t paint a complete picture, it’s also useful to see the WM_NOTIFY messages being sent to the parent (the docked Layer Dialog). Clearly it’s worth investigating what’s (not) happening in Wine.
 
