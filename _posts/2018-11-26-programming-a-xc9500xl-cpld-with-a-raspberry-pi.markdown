@@ -122,7 +122,7 @@ These people have built a neat little general-purpose GPIO adaptor for the Raspb
 
 This is actually a really neat looking project, and they’ve done the hard work to add sysfsgpio support to xc3sprog, in [their own fork](https://github.com/matrix-io/xc3sprog) (aside: both OpenOCD and xc3sprog are both still using SourceForge….unbelievable!). It’s a two year ago fork, with apparently no updates from upstream, but it does work. As far as I can tell, they use a Spartan 6, not a CPLD. xc3sprog also has the nice advantage of using the .jed file directly from ISE. I tested this out, works great, but OpenOCD is faster (possibly because it uses the GPIO directly rather than via sysfsgpio, but that’s just a guess).
 
-~~I’m going to stick with OpenOCD because it’s faster and works on the upstream codebase.~~ **Update: Use xc3sprog, it works far better and uses the .jed file directly.**
+~~I’m going to stick with OpenOCD because it’s faster and works on the upstream codebase.~~ **Update: Use xc3sprog, it works far better and uses the .jed file directly. Will write a follow-up post soon.**
 
 ## Update: Using an FT232R
 
