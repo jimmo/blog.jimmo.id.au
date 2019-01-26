@@ -1,12 +1,12 @@
 ---
 layout:	post
 title:	"CPLD CPU: Part 1, Overview"
-date:	2019-01-26
+date:	2019-01-26 22:30:00 +1100
 ---
 
 This is part 1 of a series about building a CPU out of small components implemented in CPLD. Here's the rough outline of the series, I will update it as I write each post. The CPU is actually built and works well, so I'm looking forward to writing the later posts and showing some demos!
  - [Part 1, Overview (this post)](/2019/01/26/cpld-cpu-part-1.html)
- - Part 2, Simulation
+ - [Part 2, Simulation](/2019/01/26/cpld-cpu-part-2.html)
  - Part 3, First attempt
  - Part 4, Writing programs
  - Part 5, Simplify
@@ -41,4 +41,4 @@ Some other notes:
  - It should actually be able to execute a "real" program. At a minimum, compute prime numbers, or interact with some external sensor over the GPIO pins. Maybe even run a simple game.
  - Unlike the Megaprocessor, I do not want it to conflict with my living room. "[This could be where the conflict in scale between the Megaprocessor and my living room starts to escalate.](http://megaprocessor.com/progress.html)", but like the Megaprocessor, more LEDs is more better.
 
-Up next: let's build it...in a simulator...that we're going to build from scratch.
+[Up next: let's build it...in a simulator...that we're going to build from scratch.](/2019/01/26/cpld-cpu-part-2.html)
