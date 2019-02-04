@@ -28,11 +28,45 @@ In the meantime, I experimented with the built-in firmware. The TI capture tool 
 
 While I waited for the Digikey order, I figured out how to build the Contiki firmware. On Arch Linux, mostly this involves setting up an 8051 toolchain (SDCC) and this was fairly straightforward using the [instructions on the Contiki Wiki](https://github.com/contiki-os/contiki/wiki/8051-Requirements). Note: pay careful attention to the line that says “Recent Tested SDCC revisions: 9092” — you definitely need to get that revision, see below.
 
-Also I figured it would be good to be able to program the device from Linux too — after following [this forum post](https://e2e.ti.com/support/wireless_connectivity/low_power_rf_tools/f/155/p/144696/524846#524846) to [this GitHub repo](https://github.com/dashesy/cc-tool) I was able to get that up and running too.
+Also I figured it would be good to be able to program the device from Linux too — after following [this forum post](https://e2e.ti.com/support/wireless_connectivity/low_power_rf_tools/f/155/p/144696/524846#524846) to [this GitHub repo](https://github.com/dashesy/cc-tool) I was able to get that up and running too. See commands below. Note the notch on the cable goes on the button side of the header (i.e. red is pin 1, as you'd expect). Once the cc-debugger is connected to the target and to USB, press the "reset" button on the cc-debugger to enable programming.
 
 {% include figure.html url="/assets/img/1*KCeo7QQRB5Rh5x4Vt0T3lQ.jpeg" caption="TI CC-Debugger." %}
 
 But it didn’t work. Very frustrating, because I couldn’t even make the Contiki blink demo work. Turns out something is broken in SDCC later than SVN revision 9092. Reverting back to 9092 and I had working firmware! Let me know if you’d like a built image to flash.
+
+```
+> cd ~/src/github.com/dashesy/cc-tool
+> ./bootstrap
+...
+> ./make
+...
+> # either copy udev/90-cc-debugger.rules or use sudo
+> ./cc-tool -n CC2531 --test
+  Programmer: CC Debugger
+  Target: CC2531
+  Device info:
+   Name: CC Debugger
+   Debugger ID: 0050
+   Version: 0x05CC
+   Revision: 0x0044
+
+  Target info:
+   Name: CC2531
+   Revision: 0x24
+   Internal ID: 0xB5
+   ID: 0x2531
+   Flash size: 256 KB
+   Flash page size: 2
+   RAM size: 8 KB
+   Lock data size: 16 B
+> ./cc-tool -n CC2531 --erase --write ~/src/github.com/contiki-os/contiki/examples/sensniff/sensniff.hex
+  Programmer: CC Debugger
+  Target: CC2531
+  Erasing flash...
+  Completed
+  Writing flash (47 KB)...
+  Completed (3.40 s.)
+```
 
 You can run the [sensniff Python tool](https://github.com/g-oikonomou/sensniff) with
 
@@ -40,7 +74,9 @@ You can run the [sensniff Python tool](https://github.com/g-oikonomou/sensniff) 
 > $ python3 sensniff.py -b 406800 -d /dev/ttyACM0 -D DEBUG
 ```
 
-which will create a pipe full of pcap events which you can open in Wireshark with
+You might need to change the channel number here - you can do this interactively. Once you do, you should start seeing messages like "Read a frame of size 52" but a warning about the remote end (i.e. Wireshark) not reading.
+
+Sensniff will create a pipe full of pcap events which you can open in Wireshark with
 
 ```
 > $ wireshark-gtk -ni /tmp/sensniff -k
@@ -50,7 +86,7 @@ Next to tell Wireshark how to decrypt the HA-profile data. I found [this video](
 
 * In Preferences > Protocols > Zigbee, set “Security Level” to AES-128 / 32-bit.
 * Edit the keys and add “5A:69:67:42:65:65:41:6C:6C:69:61:6E:63:65:30:39” with byte order “normal” and label something like “Zigbee Trust Center Link Key”. (Fun fact: that key is the hex of “ZigBeeAlliance09”).
-* Now grab a frame and open up “Zigbee Network Layer Data / Zigbee Security Header” and grab the transport key, and add it alongside the first key. *This key is private to your network and is given to devices during joining.*
+* Now get a device to join the network and you'll hopefully see a "Transport Key" message go past. Open up the “Zigbee Network Layer Data / Zigbee Security Header” and grab the transport key, and add it alongside the first key. *This key is private to your network and is given to devices during joining.*
 
 {% include figure.html url="/assets/img/1*OxiKK5gPMCF5KMlTjyzCrA.png" caption="Finding the transport key in the security header of a captured packet." %}
 
